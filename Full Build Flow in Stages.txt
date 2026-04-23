@@ -1,0 +1,695 @@
+Full Build Flow in Stages
+Stage 1 — Foundation
+Phase 0 — Decide the exact MVP
+
+Before touching code, lock the first version.
+
+Your MVP should do only this:
+
+User pastes a situation
+→ app sends it to AI
+→ AI returns structured decision analysis
+→ user sees result
+
+First version output:
+Risk level
+Short verdict
+Top red flags
+Recommended next step
+
+That is enough.
+
+Do not build yet:
+user accounts
+dashboards
+saved history
+subscriptions
+admin panel
+complex animations
+mobile app
+
+Those come later.
+
+Phase 1 — Prepare your tools
+
+Start by installing and setting up your environment.
+
+Apps to install
+Node.js
+VS Code
+Git
+GitHub account
+Vercel account
+Accounts to create
+OpenAI API account
+Lemon Squeezy account later
+Supabase account later
+Main stack
+Next.js
+JavaScript
+Tailwind CSS
+Why this stack
+
+Because it lets you build:
+
+frontend
+backend
+API route
+deployment
+
+all inside one project.
+
+Phase 2 — Create the project
+
+Now create the app itself.
+
+What to do
+
+Open terminal and create a Next.js app.
+
+You’ll choose:
+
+Next.js
+JavaScript
+Tailwind
+App Router
+Goal of this step
+
+At the end, you should have:
+
+a local project folder
+a running dev server
+a default webpage showing on localhost
+What you are checking
+
+Make sure:
+
+app runs without errors
+Tailwind works
+file structure is clean
+Phase 3 — Clean the starter project
+
+Before building features, strip out the junk.
+
+Remove:
+default Next.js demo content
+extra starter text
+unused components
+unused styles
+Keep:
+clean page
+simple global styles
+basic layout file
+Goal
+
+A blank foundation, not a cluttered template.
+
+Phase 4 — Plan the folder structure
+
+Before building UI, organize the project properly.
+
+Good starter structure
+app/
+page.js
+layout.js
+globals.css
+api/
+analyze/
+route.js
+components/
+Hero.js
+InputForm.js
+ResultCard.js
+LoadingState.js
+PaywallCard.js
+lib/
+openai.js
+prompt.js
+helpers.js
+Why this matters
+
+You do not want all code inside one file.
+That gets messy fast.
+
+Stage 2 — Frontend Structure
+Phase 5 — Build the static homepage first
+
+Do not connect AI yet.
+
+First build the page visually.
+
+What to build on homepage
+Section 1: Hero
+headline
+subheadline
+trust-building line
+Section 2: Input area
+large textarea
+submit button
+Section 3: Result placeholder
+box where result will show later
+Goal
+
+Make the app look real before making it functional.
+
+Why
+
+This helps you:
+
+see layout problems early
+understand user flow
+avoid mixing UI and backend logic too soon
+Phase 6 — Build the input form component
+
+Now make the input area interactive.
+
+Your input form needs:
+textarea
+button
+local state for user input
+validation
+Validation rules
+empty input should fail
+very short nonsense input should fail
+button should disable during loading
+What happens on submit for now
+
+For now, just log the input or show mock data.
+
+Goal
+
+Make sure the form works before touching OpenAI.
+
+Phase 7 — Create mock result data first
+
+Still do not connect the API yet.
+
+Use fake hardcoded output.
+
+Example mock result
+Risk level: High
+Verdict: This looks suspicious
+Red flags:
+unrealistic promise
+urgency pressure
+unclear source
+Next step: ask for proof and do not pay yet
+Why this is smart
+
+This lets you finish:
+
+result layout
+typography
+cards
+badges
+sections
+
+without waiting on backend logic.
+
+Phase 8 — Design the result display
+
+Now build the result card UI.
+
+Result card should show:
+risk badge
+verdict
+red flags list
+next action
+optional confidence score later
+Make it easy to scan
+
+People should understand the output in 3 seconds.
+
+Design principle
+
+Don’t make it look like ChatGPT text pasted into a box.
+Make it feel like a product.
+
+So format it clearly.
+
+Phase 9 — Add loading and error states
+
+Before real AI connection, prepare the UX.
+
+Loading state
+
+Show something like:
+
+analyzing situation
+checking red flags
+evaluating risk
+Error state
+
+Show friendly message for:
+
+no input
+failed request
+timeout
+invalid result
+Why now
+
+Because once AI is connected, errors will happen.
+Build these states early.
+
+Stage 3 — AI and Backend Core
+Phase 10 — Set up OpenAI API access
+
+Now connect the actual AI.
+
+What you need
+OpenAI API key
+.env.local file
+secure server-side usage only
+Important rule
+
+Never expose the API key in frontend code.
+
+It must live in:
+
+environment variables
+backend route only
+Goal
+
+By the end of this phase, your app can safely call OpenAI from the server.
+
+Phase 11 — Build the backend API route
+
+Now create the route that handles analysis.
+
+File
+
+app/api/analyze/route.js
+
+Job of this route
+receive POST request
+extract user input
+validate it
+build prompt
+call OpenAI
+return clean structured JSON
+Route flow
+Get text from request body
+Check text is present
+Build system prompt
+Send request to OpenAI
+Parse result
+Return JSON response
+Important
+
+Do not return raw messy AI output.
+Return structured fields your frontend can easily display.
+
+Phase 12 — Design the AI prompt properly
+
+This is the real engine.
+
+Your product quality depends more on this than on coding.
+
+Your prompt should force AI to return:
+risk_level
+verdict
+red_flags
+next_step
+The AI’s job
+
+It should behave like:
+
+skeptical
+practical
+clear
+action-oriented
+
+Not philosophical.
+Not overly soft.
+Not vague.
+
+Prompt rules
+
+Tell it to:
+
+identify manipulation
+identify scam patterns
+identify risk signals
+avoid overclaiming certainty
+be concise
+give actionable next step
+Important
+
+Make the output consistent
+That means either:
+
+JSON only
+or
+tightly structured format
+
+JSON is better.
+
+Phase 13 — Test prompt separately before polishing code
+
+This step is important.
+
+Before spending hours on frontend debugging, test the prompt with sample inputs.
+
+Test examples like:
+crypto investment promise
+suspicious freelance client
+cheap supplier deal
+urgent payment request
+shady contract message
+What you are checking
+does it sound useful
+does it over-warn
+does it miss obvious risk
+is the structure consistent
+does it give practical advice
+Keep refining
+
+You may rewrite the prompt several times.
+That is normal.
+
+Phase 14 — Connect frontend to backend
+
+Now replace the mock result with real API calls.
+
+Frontend flow
+User submits text
+Frontend sends POST request to /api/analyze
+Loading state shows
+Response comes back
+Result renders into the result card
+What to build
+fetch request
+loading state toggle
+result state
+error state
+disable button while request is active
+Goal
+
+Real end-to-end working app.
+
+Phase 15 — Make the returned data reliable
+
+AI can be inconsistent unless you handle it carefully.
+
+You need to guard against:
+missing fields
+malformed JSON
+empty result
+too many red flags
+weird formatting
+Fix this by:
+forcing JSON output
+validating returned fields
+using fallback values
+trimming long text
+Why
+
+A working demo is not enough.
+The product must feel stable.
+
+Phase 16 — Improve output quality
+
+Once basic flow works, refine the decision engine.
+
+Improve:
+more accurate red flag detection
+clearer verdict language
+shorter next steps
+better tone
+more useful reasoning
+Add helpful logic
+
+You can map risk levels like:
+
+Low
+Medium
+High
+Extreme
+
+And style them differently.
+
+Goal
+
+The result should feel sharp, not generic.
+
+Stage 4 — Product Polish and Live MVP
+Phase 17 — Refine the UI for trust
+
+Now improve how it looks.
+
+What to improve
+spacing
+typography
+button styles
+card hierarchy
+empty state
+hover states
+responsiveness
+Why
+
+For trust-based products, ugly design kills conversion.
+
+A clean layout makes the output feel more credible.
+
+Phase 18 — Add sample inputs
+
+This helps first-time users know what to paste.
+
+Add example chips like:
+“A client is asking me to start before contract”
+“Someone promised 20% weekly crypto returns”
+“Supplier wants full payment upfront”
+Why
+
+This reduces blank-page friction and gets people testing immediately.
+
+Phase 19 — Add simple analytics
+
+Before payments, track usage.
+
+Track:
+number of submissions
+button clicks
+drop-off
+which examples are clicked
+how often errors happen
+Tools
+
+You can use:
+
+Vercel Analytics
+Plausible
+PostHog later
+Why
+
+You need user behavior data before monetizing.
+
+Phase 20 — Deploy the free working version
+
+Now push it live.
+
+Steps
+push code to GitHub
+import repo into Vercel
+add environment variables
+deploy production build
+test live URL
+What to test on live site
+submit flow
+mobile view
+result rendering
+API response
+no exposed secrets
+Goal
+
+Public usable MVP.
+
+Phase 21 — Test with real scenarios yourself
+
+Now use it like a real user.
+
+Paste:
+
+scammy messages
+questionable deals
+suspicious emails
+bad offers
+negotiation cases
+Ask:
+would someone actually trust this
+is the result fast enough
+does the answer feel worth paying for
+is it better than just asking plain ChatGPT
+
+That last question matters a lot.
+
+Your product must feel:
+
+faster
+more focused
+more structured
+more decision-ready
+
+than plain ChatGPT.
+
+Stage 5 — Monetization Layer
+Phase 22 — Add the partial-result paywall logic
+
+Only after the product is useful.
+
+Flow
+
+User submits text
+→ sees partial result
+→ locked section appears
+→ payment required for full result
+
+Partial result can show:
+risk level
+2 red flags
+Locked result can show:
+full verdict
+detailed explanation
+next action
+response suggestion
+Why this works
+
+User gets proof of value before paying.
+
+Phase 23 — Add payments
+
+Now integrate payments.
+
+Best route for you
+Lemon Squeezy for checkout
+Payoneer for receiving payouts
+What to build
+buy button
+checkout link
+payment success flow
+unlock logic
+Important question
+
+How do you unlock after payment?
+
+For first version, simplest way:
+
+redirect to success state
+store temporary purchase state
+reveal result for that session
+
+Later you can make this cleaner with accounts.
+
+Phase 24 — Decide your pricing model
+
+Keep it simple at first.
+
+Easy starter options
+Option A
+one free teaser
+pay per full report
+Option B
+3 free checks
+monthly unlimited
+
+For your early version, pay-per-report is easier.
+
+Stage 6 — Expansion Later
+Phase 25 — Add user accounts only after payment works
+
+Do not start with auth.
+
+Add auth later when you need:
+
+saved history
+subscription tracking
+returning users
+report archive
+Good tools later
+Supabase Auth
+Clerk
+Phase 26 — Add database later
+
+You do not need a database for day 1.
+
+Add one when you want to store:
+
+results
+users
+payments
+usage limits
+analytics events
+Best simple option
+Supabase
+Phase 27 — Add usage limits
+
+Once monetization begins, control free usage.
+
+Examples
+1 free check per day
+3 lifetime free checks
+limited preview only
+This likely needs
+database
+session tracking
+auth later if needed
+Phase 28 — Add better features only after people use it
+
+Once real users try it, you can add:
+
+copy reply button
+download result
+saved scans
+category selection
+specialized modes
+
+Possible modes:
+
+scam check
+negotiation check
+client risk check
+deal review
+contract red flag review
+
+But these are later.
+
+Phase 29 — Make the app feel specialized
+
+This is how you stop it from feeling like a generic GPT wrapper.
+
+You can specialize the engine by:
+stronger prompt logic
+clearer scorecards
+sharper frameworks
+fixed categories of red flags
+better result formatting
+
+For example:
+
+manipulation
+urgency
+lack of proof
+unrealistic promise
+financial exposure
+
+This structured thinking makes the product feel premium.
+
+Phase 30 — Launch only after these 5 things are true
+
+Do not launch half-broken.
+
+Launch when:
+
+input flow works
+result is consistently useful
+design looks trustworthy
+API is stable
+payment flow is understandable
+
+Then launch.
+
+Full Build Flow
+
+Here is the whole thing in compressed order:
+
+Define MVP → install tools → create Next.js app → clean starter → plan folders → build static homepage → build input form → mock result → design result UI → add loading/error states → set up OpenAI env → build API route → write strong prompt → test prompt → connect frontend to backend → validate output → improve result quality → polish UI → add sample inputs → deploy → real-world test → add paywall → add payments → add auth/database later → improve based on usage
