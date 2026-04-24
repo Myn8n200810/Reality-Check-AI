@@ -21,15 +21,15 @@ function getRiskColor(risk: string) {
 function getRiskBg(risk: string) {
   switch (risk) {
     case "Low":
-      return "bg-green-500/10 border-green-500/20";
+      return "bg-green-500/10 border-green-500/25 shadow-[0_0_40px_rgba(34,197,94,0.07)]";
     case "Medium":
-      return "bg-yellow-500/10 border-yellow-500/20";
+      return "bg-yellow-500/10 border-yellow-500/25 shadow-[0_0_40px_rgba(234,179,8,0.07)]";
     case "High":
-      return "bg-orange-500/10 border-orange-500/20";
+      return "bg-orange-500/10 border-orange-500/25 shadow-[0_0_40px_rgba(249,115,22,0.07)]";
     case "Extreme":
-      return "bg-red-500/10 border-red-500/20";
+      return "bg-red-500/10 border-red-500/25 shadow-[0_0_40px_rgba(239,68,68,0.08)]";
     default:
-      return "bg-gray-800";
+      return "bg-white/5 border-white/10";
   }
 }
 
@@ -155,6 +155,7 @@ ${result.nextStep}`;
 
     try {
       await navigator.clipboard.writeText(text);
+
       trackEvent("result_copied", {
         risk: result?.risk || "unknown",
       });
@@ -308,8 +309,9 @@ ${result.nextStep}`;
 
   if (!result) {
     return (
-      <div className="rounded-2xl border border-gray-800 bg-gray-950 p-6 shadow-lg">
-        <p className="text-gray-400 font-medium">
+      <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.045] p-5 shadow-[0_25px_80px_rgba(0,0,0,0.4)] backdrop-blur-2xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_30%)]" />
+        <p className="relative z-10 text-white/50 font-medium">
           Your decision analysis will appear here
         </p>
       </div>
@@ -317,127 +319,165 @@ ${result.nextStep}`;
   }
 
   return (
-    <div ref={cardRef} className="grid md:grid-cols-4 gap-6">
-      <div className="md:col-span-3 space-y-6 rounded-2xl border border-gray-800 bg-gray-950 p-6 shadow-lg">
-        <div className={`p-4 rounded-xl border ${getRiskBg(result.risk)}`}>
-          <p className="text-xs uppercase text-gray-400">Decision Risk</p>
-          <p className={`text-3xl font-bold ${getRiskColor(result.risk)}`}>
-            {result.risk}
-          </p>
-        </div>
+    <div ref={cardRef} className="mx-auto grid max-w-5xl gap-5 md:grid-cols-4">
+      <div className="relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.045] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.48)] backdrop-blur-2xl md:col-span-3">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.09),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(168,85,247,0.08),transparent_30%)]" />
 
-        <div className={revealClass(showVerdict)}>
-          <p className="text-xs uppercase text-gray-400 mb-1">Verdict</p>
-          <p className="text-white text-lg font-semibold">{result.verdict}</p>
-        </div>
+        <div className="relative z-10 space-y-4">
+          <div className={`rounded-2xl border p-4 ${getRiskBg(result.risk)}`}>
+            <p className="text-xs uppercase tracking-[0.18em] text-white/40">
+              Decision Risk
+            </p>
 
-        <div className={revealClass(showFlags)}>
-          <p className="text-xs uppercase text-gray-400 mb-2">Key Risks</p>
-          <div className="space-y-2">
-            {result.redFlags.map((flag: string, i: number) => (
-              <div
-                key={i}
-                className="p-3 rounded-lg bg-black border border-gray-800"
-              >
-                ⚠ {flag}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className={revealClass(showAction)}>
-          <p className="text-xs uppercase text-gray-400 mb-1">
-            Recommended Action
-          </p>
-
-          <p className="text-white leading-7 mb-4">{result.nextStep}</p>
-
-          <div className="flex gap-3 flex-wrap">
-            <button
-              onClick={handleCopy}
-              className="px-3 py-1 border border-gray-700 rounded-md"
-            >
-              Copy
-            </button>
-
-            <button
-              onClick={handleToggleDeeper}
-              disabled={questionsLoading}
-              className="px-3 py-1 border border-gray-700 rounded-md disabled:opacity-60"
-            >
-              {questionsLoading
-                ? "Preparing Deeper Analysis..."
-                : showDeeper
-                ? "Hide Deeper Analysis"
-                : "Deeper Analysis"}
-            </button>
-          </div>
-        </div>
-
-        {showDeeper && (
-          <div
-            ref={deeperRef}
-            className="rounded-xl border border-gray-800 bg-black p-4 space-y-4"
-          >
-            <div>
-              <p className="text-xs uppercase text-gray-400 mb-1">
-                Deeper Analysis
+            <div className="mt-2 flex items-end justify-between gap-4">
+              <p className={`text-4xl font-bold ${getRiskColor(result.risk)}`}>
+                {result.risk}
               </p>
-              <p className="text-sm text-gray-400">
-                Add missing context, details, screenshots in text form, pressure
-                points, pricing, promises, or anything else that sharpens the
-                decision.
+
+              <div className="hidden rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-xs uppercase tracking-[0.16em] text-white/40 md:block">
+                Risk Engine
+              </div>
+            </div>
+          </div>
+
+          <div className={revealClass(showVerdict)}>
+            <p className="mb-2 text-xs uppercase tracking-[0.18em] text-white/40">
+              Verdict
+            </p>
+
+            <div className="rounded-2xl border border-white/10 bg-black/45 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+              <p className="text-base font-semibold leading-7 text-white md:text-lg">
+                {result.verdict}
               </p>
             </div>
+          </div>
+
+          <div className={revealClass(showFlags)}>
+            <p className="mb-2 text-xs uppercase tracking-[0.18em] text-white/40">
+              Key Risks
+            </p>
 
             <div className="space-y-2">
-              <p className="text-xs uppercase text-gray-400">
-                AI Follow-Up Questions
+              {result.redFlags.map((flag: string, i: number) => (
+                <div
+                  key={i}
+                  className="group rounded-2xl border border-white/10 bg-black/45 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition hover:border-white/20"
+                >
+                  <div className="flex gap-3">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-xs">
+                      ⚠
+                    </div>
+
+                    <p className="text-sm leading-6 text-white/75">{flag}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={revealClass(showAction)}>
+            <p className="mb-2 text-xs uppercase tracking-[0.18em] text-white/40">
+              Recommended Action
+            </p>
+
+            <div className="rounded-2xl border border-white/10 bg-black/50 p-4">
+              <p className="text-sm leading-6 text-white/85">
+                {result.nextStep}
               </p>
 
-              <div className="space-y-2">
-                {deeperQuestions.map((question, index) => (
-                  <div
-                    key={index}
-                    className="rounded-lg border border-gray-800 bg-gray-950 p-3 text-sm text-gray-300"
-                  >
-                    {question}
-                  </div>
-                ))}
+              <div className="mt-4 flex flex-wrap gap-3">
+                <button
+                  onClick={handleCopy}
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+                >
+                  Copy
+                </button>
+
+                <button
+                  onClick={handleToggleDeeper}
+                  disabled={questionsLoading}
+                  className="rounded-xl border border-white/10 bg-white px-4 py-2 text-sm font-semibold text-black transition hover:opacity-90 disabled:opacity-60"
+                >
+                  {questionsLoading
+                    ? "Preparing Deeper Analysis..."
+                    : showDeeper
+                    ? "Hide Deeper Analysis"
+                    : "Deeper Analysis"}
+                </button>
               </div>
             </div>
-
-            <textarea
-              value={deeperInput}
-              onChange={(e) => setDeeperInput(e.target.value)}
-              placeholder="Answer the questions above or add more details that may change the decision..."
-              className="w-full h-36 rounded-xl bg-gray-950 border border-gray-800 p-4 text-white"
-            />
-
-            <button
-              onClick={handleDeeperSubmit}
-              disabled={deeperLoading}
-              className="w-full py-3 bg-white text-black font-semibold rounded-xl disabled:opacity-60"
-            >
-              {deeperLoading ? "Refining Analysis..." : "Run Deeper Analysis"}
-            </button>
           </div>
-        )}
 
-        <p className="text-xs text-gray-500">
-          * This is not financial, legal, or professional advice. Always verify
-          independently.
-        </p>
+          {showDeeper && (
+            <div
+              ref={deeperRef}
+              className="rounded-2xl border border-white/10 bg-black/55 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+            >
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-white/40">
+                  Deeper Analysis
+                </p>
+
+                <p className="mt-2 text-sm leading-6 text-white/55">
+                  Add missing context, details, screenshots in text form,
+                  pressure points, pricing, promises, or anything else that
+                  sharpens the decision.
+                </p>
+              </div>
+
+              <div className="mt-4 space-y-2">
+                <p className="text-xs uppercase tracking-[0.18em] text-white/40">
+                  AI Follow-Up Questions
+                </p>
+
+                <div className="space-y-2">
+                  {deeperQuestions.map((question, index) => (
+                    <div
+                      key={index}
+                      className="rounded-xl border border-white/10 bg-white/[0.04] p-3 text-sm leading-6 text-white/70"
+                    >
+                      {question}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <textarea
+                value={deeperInput}
+                onChange={(e) => setDeeperInput(e.target.value)}
+                placeholder="Answer the questions above or add more details that may change the decision..."
+                className="mt-4 h-32 w-full resize-none rounded-2xl border border-white/10 bg-black/70 p-4 text-sm text-white outline-none placeholder:text-white/30 focus:border-white/25"
+              />
+
+              <button
+                onClick={handleDeeperSubmit}
+                disabled={deeperLoading}
+                className="mt-4 w-full rounded-2xl bg-white py-3 text-sm font-semibold text-black transition hover:opacity-90 disabled:opacity-60"
+              >
+                {deeperLoading ? "Refining Analysis..." : "Run Deeper Analysis"}
+              </button>
+            </div>
+          )}
+
+          <p className="text-xs text-white/35">
+            * This is not financial, legal, or professional advice. Always
+            verify independently.
+          </p>
+        </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2">
         {getRiskGuide().map((item) => (
           <div
             key={item.level}
-            className="border border-gray-800 rounded-xl p-3 bg-gray-950"
+            className="rounded-2xl border border-white/10 bg-white/[0.045] p-3 shadow-[0_18px_55px_rgba(0,0,0,0.32)] backdrop-blur-2xl"
           >
-            <p className={`font-semibold ${item.color}`}>{item.level}</p>
-            <p className="text-sm text-gray-400">{item.text}</p>
+            <p className={`text-sm font-semibold ${item.color}`}>
+              {item.level}
+            </p>
+            <p className="mt-1 text-xs leading-5 text-white/45">
+              {item.text}
+            </p>
           </div>
         ))}
       </div>
