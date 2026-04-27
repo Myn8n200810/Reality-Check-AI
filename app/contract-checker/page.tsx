@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import ShareButton from "@/components/ShareButton";
+import ProfileMenu from "@/components/ProfileMenu";
 import { trackEvent } from "@/lib/analytics";
 
 function getRiskColor(risk: string) {
@@ -109,6 +112,8 @@ export default function ContractCheckerPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-black text-white">
+      <Navbar current="contract" />
+
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.18),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(34,211,238,0.13),transparent_32%),linear-gradient(to_bottom,#020202,#070707,#020202)]" />
 
       <div className="absolute inset-0 opacity-35">
@@ -128,8 +133,14 @@ export default function ContractCheckerPage() {
               ← Back
             </Link>
 
-            <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/45 backdrop-blur-xl">
-              Mode 02
+            <div className="flex items-center gap-3">
+              <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/45 backdrop-blur-xl">
+                Mode 02
+              </div>
+
+              {result && <ShareButton />}
+
+              <ProfileMenu />
             </div>
           </div>
 
@@ -189,7 +200,7 @@ export default function ContractCheckerPage() {
 
           {loading && (
             <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.045] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.45)] backdrop-blur-2xl">
-              <p className="text-white/60 animate-pulse">
+              <p className="animate-pulse text-white/60">
                 Scanning clauses, obligations, and hidden risks...
               </p>
             </div>

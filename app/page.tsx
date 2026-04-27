@@ -1,8 +1,11 @@
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 
 export default function HomePage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-black text-white">
+      <Navbar />
+
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(70,70,120,0.28),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,140,255,0.16),transparent_28%),linear-gradient(to_bottom,#050505,#090909,#050505)]" />
 
       <div className="absolute inset-0 opacity-30">
@@ -14,9 +17,11 @@ export default function HomePage() {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
 
       <header className="relative z-10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-          <div className="text-sm font-medium tracking-[0.2em] text-white/75 uppercase">
-            Reality Check
+        <div className="mx-auto flex h-[92px] max-w-7xl items-center justify-between px-6">
+          <div className="flex h-full items-center pl-24">
+           <span className="block translate-y-[-8px] text-sm font-medium leading-none tracking-[0.35em] text-white/85 uppercase">
+              DecidelyAI
+            </span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -42,12 +47,21 @@ export default function HomePage() {
             Professional risk analysis tools
           </div>
 
-          <h1 className="max-w-4xl text-center text-5xl font-semibold tracking-tight text-white md:text-7xl">
+          <h1 className="text-center text-4xl font-semibold tracking-tight text-white md:text-6xl">
+            DecidelyAI
+          </h1>
+
+          <p className="mt-3 text-center text-sm text-white/50">
+            Make the right call — every time.
+          </p>
+
+          <h2 className="mt-6 max-w-4xl text-center text-5xl font-semibold tracking-tight text-white md:text-7xl">
             Choose your
             <span className="bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
-              {" "}analysis mode
+              {" "}
+              analysis mode
             </span>
-          </h1>
+          </h2>
 
           <p className="mt-5 max-w-2xl text-center text-base leading-7 text-white/60 md:text-lg">
             Professional tools for spotting hidden risk, pressure, harmful terms,
@@ -60,15 +74,18 @@ export default function HomePage() {
               className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/7 p-[1px] shadow-[0_24px_80px_rgba(0,0,0,0.45)] transition duration-300 hover:-translate-y-1 hover:border-white/20"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-cyan-400/10 opacity-70 transition group-hover:opacity-100" />
+
               <div className="relative rounded-[27px] border border-white/8 bg-black/65 p-8 backdrop-blur-2xl">
                 <div className="mb-10 h-24 w-full rounded-2xl border border-white/8 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.13),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02))] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]" />
 
                 <p className="text-xs tracking-[0.22em] text-white/45 uppercase">
                   Mode 01
                 </p>
-                <h2 className="mt-3 text-3xl font-semibold text-white">
+
+                <h3 className="mt-3 text-3xl font-semibold text-white">
                   Reality Check AI
-                </h2>
+                </h3>
+
                 <p className="mt-4 max-w-md text-sm leading-6 text-white/60">
                   Analyze offers, messages, decisions, pressure tactics, and red
                   flags before you act.
@@ -90,15 +107,18 @@ export default function HomePage() {
               className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/7 p-[1px] shadow-[0_24px_80px_rgba(0,0,0,0.45)] transition duration-300 hover:-translate-y-1 hover:border-white/20"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-violet-400/10 opacity-70 transition group-hover:opacity-100" />
+
               <div className="relative rounded-[27px] border border-white/8 bg-black/65 p-8 backdrop-blur-2xl">
                 <div className="mb-10 h-24 w-full rounded-2xl border border-white/8 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.13),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02))] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]" />
 
                 <p className="text-xs tracking-[0.22em] text-white/45 uppercase">
                   Mode 02
                 </p>
-                <h2 className="mt-3 text-3xl font-semibold text-white">
+
+                <h3 className="mt-3 text-3xl font-semibold text-white">
                   Contract Checker
-                </h2>
+                </h3>
+
                 <p className="mt-4 max-w-md text-sm leading-6 text-white/60">
                   Review legal wording, suspicious clauses, hidden obligations,
                   and harmful terms in plain English.
@@ -109,7 +129,7 @@ export default function HomePage() {
                     Continue
                   </span>
                   <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/55 transition group-hover:border-white/20 group-hover:text-white/80">
-                    Coming Next
+                    Open
                   </span>
                 </div>
               </div>

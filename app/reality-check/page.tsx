@@ -2,6 +2,9 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import ShareButton from "@/components/ShareButton";
+import ProfileMenu from "@/components/ProfileMenu";
 import Hero from "@/components/Hero";
 import InputForm from "@/components/InputForm";
 import ResultCard from "@/components/ResultCard";
@@ -16,6 +19,8 @@ export default function RealityCheckPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-black text-white">
+      <Navbar current="reality" />
+
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.15),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(168,85,247,0.16),transparent_34%),linear-gradient(to_bottom,#020202,#070707,#020202)]" />
 
       <div className="absolute inset-0 opacity-40">
@@ -36,8 +41,14 @@ export default function RealityCheckPage() {
               ← Back
             </Link>
 
-            <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/45 backdrop-blur-xl">
-              Mode 01
+            <div className="flex items-center gap-3">
+              <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/45 backdrop-blur-xl">
+                Mode 01
+              </div>
+
+              {result && <ShareButton />}
+
+              <ProfileMenu />
             </div>
           </div>
 
