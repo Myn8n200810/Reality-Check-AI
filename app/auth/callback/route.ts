@@ -4,7 +4,6 @@ import { createClient } from "@supabase/supabase-js";
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const origin = requestUrl.origin;
 
   if (code) {
     const supabase = createClient(
@@ -15,5 +14,5 @@ export async function GET(request: Request) {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(`${origin}/`);
+  return NextResponse.redirect(new URL("/", request.url));
 }

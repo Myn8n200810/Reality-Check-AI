@@ -79,7 +79,7 @@ At the end, you should have:
 
 a local project folder
 a running dev server
-a default webpage showing on localhost
+a default webpage showing on the local dev URL
 What you are checking
 
 Make sure:
