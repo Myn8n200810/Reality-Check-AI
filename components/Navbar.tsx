@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import SettingsModal, { type SectionKey } from "@/components/SettingsModal";
 
@@ -35,12 +34,6 @@ export default function Navbar({ current }: { current?: string }) {
   const closeBothMenus = () => {
     window.dispatchEvent(new Event("close-navbar-menu"));
     window.dispatchEvent(new Event("close-profile-menu"));
-  };
-
-  const handleLogout = async () => {
-    closeBothMenus();
-    await supabase.auth.signOut();
-    router.push("/");
   };
 
   return (
@@ -157,7 +150,11 @@ export default function Navbar({ current }: { current?: string }) {
             </button>
 
             <button
-              onClick={closeBothMenus}
+              onClick={() => {
+                closeBothMenus();
+                setSettingsSection("notifications");
+                setSettingsOpen(true);
+              }}
               className="flex items-center gap-3 w-full px-4 py-2 hover:bg-white/10 rounded-xl"
             >
               <svg
@@ -226,57 +223,6 @@ export default function Navbar({ current }: { current?: string }) {
             </button>
 
             <div className="border-t border-white/10 my-2" />
-
-            <button
-              onClick={closeBothMenus}
-              className="flex items-center gap-3 w-full px-4 py-2 hover:bg-white/10 rounded-xl"
-            >
-              <svg
-                className="w-5 h-5 text-white/70"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 5v14M5 12h14" />
-              </svg>
-              Add Account
-            </button>
-
-            <button
-              onClick={closeBothMenus}
-              className="flex items-center gap-3 w-full px-4 py-2 hover:bg-white/10 rounded-xl"
-            >
-              <svg
-                className="w-5 h-5 text-white/70"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                viewBox="0 0 24 24"
-              >
-                <path d="M7 7h11M7 7l4-4M7 7l4 4M17 17H6M17 17l-4 4M17 17l-4-4" />
-              </svg>
-              Switch Account
-            </button>
-
-            <div className="border-t border-white/10 my-2" />
-
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-3 w-full px-4 py-2 hover:bg-red-500/20 rounded-xl text-red-400"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                viewBox="0 0 24 24"
-              >
-                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-                <path d="M16 17l5-5-5-5M21 12H9" />
-              </svg>
-              Logout
-            </button>
           </div>
         )}
       </div>

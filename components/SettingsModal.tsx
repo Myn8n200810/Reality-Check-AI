@@ -188,13 +188,15 @@ const sections: {
 export default function SettingsModal({
   open,
   onClose,
-  initialSection = "general",
+  initialSection,
 }: SettingsModalProps) {
-  const [active, setActive] = useState<SectionKey>(initialSection);
+  const [activeSection, setActiveSection] = useState<SectionKey>(
+    initialSection ?? "general"
+  );
 
   useEffect(() => {
     if (open) {
-      setActive(initialSection);
+      setActiveSection(initialSection ?? "general");
     }
   }, [open, initialSection]);
 
@@ -215,7 +217,7 @@ export default function SettingsModal({
   }, [open, onClose]);
 
   const content = useMemo(() => {
-    switch (active) {
+    switch (activeSection) {
       case "general":
         return <GeneralContent />;
 
@@ -237,7 +239,7 @@ export default function SettingsModal({
       default:
         return null;
     }
-  }, [active]);
+  }, [activeSection]);
 
   if (!open) return null;
 
@@ -275,9 +277,9 @@ export default function SettingsModal({
                 {sections.map((section) => (
                   <button
                     key={section.key}
-                    onClick={() => setActive(section.key)}
+                    onClick={() => setActiveSection(section.key)}
                     className={`btn-press flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm ${
-                      active === section.key
+                      activeSection === section.key
                         ? "bg-white/10 text-white"
                         : "text-white/75 hover:text-white"
                     }`}
