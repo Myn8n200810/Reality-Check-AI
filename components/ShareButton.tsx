@@ -21,7 +21,7 @@ export default function ShareButton() {
   return (
     <button
       onClick={handleShare}
-      className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 backdrop-blur-xl transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+      className="btn-press flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 backdrop-blur-xl hover:text-white"
     >
       <svg
         className="h-4 w-4"
@@ -33,6 +33,7 @@ export default function ShareButton() {
         <path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7" />
         <path d="M16 6l-4-4-4 4M12 2v14" />
       </svg>
+
       Share
     </button>
   );

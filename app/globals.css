@@ -1,1 +1,223 @@
 @import "tailwindcss";
+
+:root {
+  --decidely-accent: #34d399;
+  --decidely-accent-soft: rgba(52, 211, 153, 0.2);
+}
+
+/* Accent colors */
+html.accent-default {
+  --decidely-accent: #a1a1aa;
+  --decidely-accent-soft: rgba(161, 161, 170, 0.22);
+}
+
+html.accent-blue {
+  --decidely-accent: #3b82f6;
+  --decidely-accent-soft: rgba(59, 130, 246, 0.22);
+}
+
+html.accent-green {
+  --decidely-accent: #22c55e;
+  --decidely-accent-soft: rgba(34, 197, 94, 0.22);
+}
+
+html.accent-yellow {
+  --decidely-accent: #eab308;
+  --decidely-accent-soft: rgba(234, 179, 8, 0.22);
+}
+
+html.accent-pink {
+  --decidely-accent: #ec4899;
+  --decidely-accent-soft: rgba(236, 72, 153, 0.22);
+}
+
+html.accent-orange {
+  --decidely-accent: #f97316;
+  --decidely-accent-soft: rgba(249, 115, 22, 0.22);
+}
+
+html.accent-purple {
+  --decidely-accent: #8b5cf6;
+  --decidely-accent-soft: rgba(139, 92, 246, 0.22);
+}
+
+html.accent-black {
+  --decidely-accent: #0a0a0a;
+  --decidely-accent-soft: rgba(255, 255, 255, 0.08);
+}
+
+/* Contrast */
+html.contrast-medium {
+  filter: contrast(1.06);
+}
+
+html.contrast-increased {
+  filter: contrast(1.14);
+}
+
+/* Appearance */
+
+html.appearance-dark body {
+  background: #000000;
+  color: #ffffff;
+}
+
+
+
+:root {
+  --decidely-accent: #a1a1aa;
+  --decidely-accent-soft: rgba(161, 161, 170, 0.22);
+}
+
+/* ========================= */
+/* ACCENT COLORS */
+/* ========================= */
+
+html.accent-default {
+  --decidely-accent: #a1a1aa;
+  --decidely-accent-soft: rgba(161, 161, 170, 0.22);
+}
+
+html.accent-blue {
+  --decidely-accent: #3b82f6;
+  --decidely-accent-soft: rgba(59, 130, 246, 0.22);
+}
+
+html.accent-green {
+  --decidely-accent: #22c55e;
+  --decidely-accent-soft: rgba(34, 197, 94, 0.22);
+}
+
+html.accent-yellow {
+  --decidely-accent: #eab308;
+  --decidely-accent-soft: rgba(234, 179, 8, 0.22);
+}
+
+html.accent-pink {
+  --decidely-accent: #ec4899;
+  --decidely-accent-soft: rgba(236, 72, 153, 0.22);
+}
+
+html.accent-orange {
+  --decidely-accent: #f97316;
+  --decidely-accent-soft: rgba(249, 115, 22, 0.22);
+}
+
+html.accent-purple {
+  --decidely-accent: #8b5cf6;
+  --decidely-accent-soft: rgba(139, 92, 246, 0.22);
+}
+
+html.accent-black {
+  --decidely-accent: #0a0a0a;
+  --decidely-accent-soft: rgba(255, 255, 255, 0.08);
+}
+
+/* Apply accent to common active colors */
+html[class*="accent-"] .bg-emerald-400,
+html[class*="accent-"] .bg-blue-500 {
+  background-color: var(--decidely-accent) !important;
+}
+
+html[class*="accent-"] .text-emerald-400,
+html[class*="accent-"] .text-blue-500 {
+  color: var(--decidely-accent) !important;
+}
+
+html[class*="accent-"] .shadow-\[0_12px_40px_rgba\(52\,211\,153\,0\.25\)\] {
+  box-shadow: 0 12px 40px var(--decidely-accent-soft) !important;
+}
+
+/* ========================= */
+/* CONTRAST */
+/* ========================= */
+
+html.contrast-system {
+  filter: none;
+}
+
+html.contrast-medium {
+  filter: contrast(1.06);
+}
+
+html.contrast-increased {
+  filter: contrast(1.14);
+}
+
+/* ========================= */
+/* APPEARANCE */
+/* ========================= */
+
+html.appearance-dark body,
+html.appearance-system body {
+  background: #000000;
+  color: #ffffff;
+}
+/* ========================= */
+/* GLOBAL BUTTON PRESS SYSTEM */
+/* ========================= */
+
+.btn-press {
+  transition-property:
+    transform,
+    background-color,
+    border-color,
+    color,
+    opacity,
+    box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.btn-press:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-press:active {
+  transform: scale(0.96);
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.btn-press-light {
+  transition-property:
+    transform,
+    background-color,
+    border-color,
+    color,
+    opacity,
+    box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.btn-press-light:hover {
+  opacity: 0.9;
+}
+
+.btn-press-light:active {
+  transform: scale(0.96);
+  opacity: 0.82;
+}
+
+.btn-press-danger {
+  transition-property:
+    transform,
+    background-color,
+    border-color,
+    color,
+    opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.btn-press-danger:hover {
+  background-color: rgba(239, 68, 68, 0.14);
+  border-color: rgba(248, 113, 113, 0.5);
+}
+
+.btn-press-danger:active {
+  transform: scale(0.96);
+  background-color: rgba(239, 68, 68, 0.22);
+}
+

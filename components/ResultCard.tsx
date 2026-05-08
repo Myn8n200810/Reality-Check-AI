@@ -36,9 +36,21 @@ function getRiskBg(risk: string) {
 function getRiskGuide() {
   return [
     { level: "Extreme", text: "Do NOT proceed", color: "text-red-500" },
-    { level: "High", text: "Proceed with safeguards", color: "text-orange-400" },
-    { level: "Medium", text: "Verify before acting", color: "text-yellow-400" },
-    { level: "Low", text: "Safe with minor caution", color: "text-green-400" },
+    {
+      level: "High",
+      text: "Proceed with safeguards",
+      color: "text-orange-400",
+    },
+    {
+      level: "Medium",
+      text: "Verify before acting",
+      color: "text-yellow-400",
+    },
+    {
+      level: "Low",
+      text: "Safe with minor caution",
+      color: "text-green-400",
+    },
   ];
 }
 
@@ -48,7 +60,11 @@ function revealClass(show: boolean) {
   }`;
 }
 
-export default function ResultCard({ result, setResult, originalInput }: any) {
+export default function ResultCard({
+  result,
+  setResult,
+  originalInput,
+}: any) {
   const [showVerdict, setShowVerdict] = useState(false);
   const [showFlags, setShowFlags] = useState(false);
   const [showAction, setShowAction] = useState(false);
@@ -89,6 +105,7 @@ export default function ResultCard({ result, setResult, originalInput }: any) {
 
       if (overflow > 0.5) {
         const step = Math.max(1, Math.min(overflow * 0.14, 8));
+
         window.scrollTo({
           top: window.scrollY + step,
           behavior: "auto",
@@ -131,6 +148,7 @@ export default function ResultCard({ result, setResult, originalInput }: any) {
       clearTimeout(t2);
       clearTimeout(t3);
       clearTimeout(stop);
+
       stopSmoothScroll();
     };
   }, [result]);
@@ -207,6 +225,7 @@ ${result.nextStep}`;
 
     try {
       const questions = await fetchDeeperQuestions();
+
       setDeeperQuestions(questions);
       setShowDeeper(true);
 
@@ -222,6 +241,7 @@ ${result.nextStep}`;
         "What proof or evidence have you actually seen?",
         "What is the downside if this goes wrong?",
       ]);
+
       setShowDeeper(true);
 
       setTimeout(() => {
@@ -260,7 +280,9 @@ ${result.nextStep}`;
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.details || data.error || "Failed deeper analysis");
+        throw new Error(
+          data.details || data.error || "Failed deeper analysis"
+        );
       }
 
       setResult(data);
@@ -284,7 +306,11 @@ ${result.nextStep}`;
       setResult({
         risk: "Error",
         verdict: message,
-        redFlags: ["System error", "Could not refine analysis", "Try again"],
+        redFlags: [
+          "System error",
+          "Could not refine analysis",
+          "Try again",
+        ],
         nextStep: "Retry with clearer details.",
       });
 
@@ -311,7 +337,8 @@ ${result.nextStep}`;
     return (
       <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.045] p-5 shadow-[0_25px_80px_rgba(0,0,0,0.4)] backdrop-blur-2xl">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_30%)]" />
-        <p className="relative z-10 text-white/50 font-medium">
+
+        <p className="relative z-10 font-medium text-white/50">
           Your decision analysis will appear here
         </p>
       </div>
@@ -361,7 +388,7 @@ ${result.nextStep}`;
               {result.redFlags.map((flag: string, i: number) => (
                 <div
                   key={i}
-                  className="group rounded-2xl border border-white/10 bg-black/45 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition hover:border-white/20"
+                  className="btn-press group rounded-2xl border border-white/10 bg-black/45 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                 >
                   <div className="flex gap-3">
                     <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-xs">
@@ -388,7 +415,7 @@ ${result.nextStep}`;
               <div className="mt-4 flex flex-wrap gap-3">
                 <button
                   onClick={handleCopy}
-                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+                  className="btn-press rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 hover:text-white"
                 >
                   Copy
                 </button>
@@ -396,7 +423,7 @@ ${result.nextStep}`;
                 <button
                   onClick={handleToggleDeeper}
                   disabled={questionsLoading}
-                  className="rounded-xl border border-white/10 bg-white px-4 py-2 text-sm font-semibold text-black transition hover:opacity-90 disabled:opacity-60"
+                  className="btn-press-light rounded-xl border border-white/10 bg-white px-4 py-2 text-sm font-semibold text-black disabled:opacity-60"
                 >
                   {questionsLoading
                     ? "Preparing Deeper Analysis..."
@@ -446,15 +473,17 @@ ${result.nextStep}`;
                 value={deeperInput}
                 onChange={(e) => setDeeperInput(e.target.value)}
                 placeholder="Answer the questions above or add more details that may change the decision..."
-                className="mt-4 h-32 w-full resize-none rounded-2xl border border-white/10 bg-black/70 p-4 text-sm text-white outline-none placeholder:text-white/30 focus:border-white/25"
+                className="mt-4 h-32 w-full resize-none rounded-2xl border border-white/10 bg-black/70 p-4 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-white/25"
               />
 
               <button
                 onClick={handleDeeperSubmit}
                 disabled={deeperLoading}
-                className="mt-4 w-full rounded-2xl bg-white py-3 text-sm font-semibold text-black transition hover:opacity-90 disabled:opacity-60"
+                className="btn-press-light mt-4 w-full rounded-2xl bg-white py-3 text-sm font-semibold text-black disabled:opacity-60"
               >
-                {deeperLoading ? "Refining Analysis..." : "Run Deeper Analysis"}
+                {deeperLoading
+                  ? "Refining Analysis..."
+                  : "Run Deeper Analysis"}
               </button>
             </div>
           )}
@@ -475,6 +504,7 @@ ${result.nextStep}`;
             <p className={`text-sm font-semibold ${item.color}`}>
               {item.level}
             </p>
+
             <p className="mt-1 text-xs leading-5 text-white/45">
               {item.text}
             </p>

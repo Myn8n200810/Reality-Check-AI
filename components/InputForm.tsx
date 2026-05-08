@@ -75,6 +75,7 @@ export default function InputForm({
             <p className="text-xs uppercase tracking-[0.18em] text-white/40">
               Situation Input
             </p>
+
             <h2 className="mt-1 text-xl font-semibold text-white">
               What needs a reality check?
             </h2>
@@ -89,12 +90,12 @@ export default function InputForm({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Paste your situation here..."
-          className="h-48 w-full resize-none rounded-2xl border border-white/10 bg-black/60 p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] outline-none placeholder:text-white/30 focus:border-white/25"
+          className="h-48 w-full resize-none rounded-2xl border border-white/10 bg-black/60 p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] outline-none transition placeholder:text-white/30 focus:border-white/25"
         />
 
         <button
           onClick={handleSubmit}
-          className="w-full rounded-2xl bg-white py-3.5 font-semibold text-black shadow-[0_18px_60px_rgba(255,255,255,0.08)] transition hover:-translate-y-0.5 hover:opacity-90 active:translate-y-0"
+          className="btn-press-light w-full rounded-2xl bg-white py-3.5 font-semibold text-black shadow-[0_18px_60px_rgba(255,255,255,0.08)]"
         >
           Check Now
         </button>

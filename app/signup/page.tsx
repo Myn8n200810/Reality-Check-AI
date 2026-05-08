@@ -47,6 +47,9 @@ export default function SignupPage() {
   };
 
   const handleGoogleSignup = async () => {
+    setError("");
+    setMessage("");
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -60,93 +63,85 @@ export default function SignupPage() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+    <main className="flex min-h-screen items-center justify-center bg-black px-6 text-white">
       <div className="w-full max-w-md">
-
         <Link
           href="/"
-          className="text-sm text-white/60 hover:text-white mb-6 inline-block"
+          className="btn-press mb-6 inline-block rounded-full px-3 py-2 text-sm text-white/60 hover:text-white"
         >
           ← Back
         </Link>
 
-        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl">
+          <h1 className="mb-6 text-3xl font-semibold">Create account</h1>
 
-          <h1 className="text-3xl font-semibold mb-6">Create account</h1>
-
-          {/* Google */}
           <button
             onClick={handleGoogleSignup}
-            className="w-full flex items-center justify-center gap-3 border border-white/15 bg-white/10 hover:bg-white/15 rounded-xl py-3 mb-4"
+            className="btn-press mb-4 flex w-full items-center justify-center gap-3 rounded-xl border border-white/15 bg-white/10 py-3 text-white"
           >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
-              className="w-5 h-5"
+              className="h-5 w-5"
+              alt="Google"
             />
             Continue with Google
           </button>
 
-          <div className="text-center text-white/40 text-sm my-4">or</div>
+          <div className="my-4 text-center text-sm text-white/40">or</div>
 
-          {/* Names */}
           <div className="flex gap-3">
             <input
               placeholder="First name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="w-1/2 px-4 py-3 rounded-xl bg-black border border-white/10"
+              className="w-1/2 rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none transition focus:border-white/30"
             />
+
             <input
               placeholder="Last name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="w-1/2 px-4 py-3 rounded-xl bg-black border border-white/10"
+              className="w-1/2 rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none transition focus:border-white/30"
             />
           </div>
 
-          {/* Email */}
           <input
+            type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full mt-3 px-4 py-3 rounded-xl bg-black border border-white/10"
+            className="mt-3 w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none transition focus:border-white/30"
           />
 
-          {/* Password */}
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full mt-3 px-4 py-3 rounded-xl bg-black border border-white/10"
+            className="mt-3 w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none transition focus:border-white/30"
           />
 
-          {/* Submit */}
           <button
             onClick={handleSignup}
             disabled={loading}
-            className="w-full mt-4 py-3 bg-white text-black font-semibold rounded-xl"
+            className="btn-press-light mt-4 w-full rounded-xl bg-white py-3 font-semibold text-black disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Creating..." : "Create Account"}
           </button>
 
-          {/* Messages */}
-          {message && (
-            <p className="mt-4 text-sm text-green-400">{message}</p>
-          )}
+          {message && <p className="mt-4 text-sm text-green-400">{message}</p>}
 
-          {error && (
-            <p className="mt-4 text-sm text-red-400">{error}</p>
-          )}
+          {error && <p className="mt-4 text-sm text-red-400">{error}</p>}
 
-          {/* Link */}
-          <p className="text-sm text-white/50 mt-6 text-center">
+          <p className="mt-6 text-center text-sm text-white/50">
             Already have an account?{" "}
-            <Link href="/login" className="text-white hover:underline">
+            <Link
+              href="/login"
+              className="btn-press inline-block rounded-full px-2 py-1 text-white hover:no-underline"
+            >
               Log in
             </Link>
           </p>
-
         </div>
       </div>
     </main>
